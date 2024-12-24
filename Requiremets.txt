@@ -1,0 +1,6 @@
+Backend: Django, Python, MySQL, GPT-2 for recommendations
+Frontend: React.js, Redux, Bootstrap/TailwindCSS
+Deployment: AWS/Heroku, CI/CD tools, SSL, Load Balancing
+Testing: Pytest, Jest, Postman
+Security: SSL, JWT, CSRF, AES encryption
+
