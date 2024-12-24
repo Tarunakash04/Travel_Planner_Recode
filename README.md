@@ -1,6 +1,4 @@
-# Travel_Destination_Suggestor
-
-# Travel Destination Suggestion Platform Development Roadmap
+# Travel Destination Suggestion Platform
 
 This document outlines the development roadmap for the Travel Destination Suggestion Platform. The goal is to build a user-friendly platform where users can get personalized travel recommendations based on preferences such as budget, duration, and travel type (e.g., solo, family, honeymoon).
 
