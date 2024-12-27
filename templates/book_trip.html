@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Book Flight</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Available Flights for {{ plan.destination }}</h1>
+        <ul>
+            {% for flight in flights %}
+                <li>
+                    {{ flight.flight_number }} | {{ flight.airline }} | {{ flight.departure_time }} - {{ flight.arrival_time }}
+                </li>
+            {% else %}
+                <li>No flights available.</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('view_plans') }}" class="btn">Back</a>
+    </div>
+</body>
+</html>

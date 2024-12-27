@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Travel Plans</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Travel Plans</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Departure Date</th>
+                    <th>Return Date</th>
+                    <th>Flight Booking</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for plan in plans %}
+                    <tr>
+                        <td>{{ plan.destination }}</td>
+                        <td>{{ plan.departure_date }}</td>
+                        <td>{{ plan.return_date }}</td>
+                        <td>
+                            {% if plan.flight_id %}
+                                <!-- If a flight has been booked, show the flight details -->
+                                {% for flight in flights %}
+                                    {% if flight.id == plan.flight_id %}
+                                        <p>Flight: {{ flight.flight_number }} - {{ flight.airline }} ({{ flight.from_location }} to {{ flight.to_location }})</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <!-- If no flight is booked, show the flight selection dropdown -->
+                                <form action="{{ url_for('flight_booking', plan_id=plan.id) }}" method="POST">
+                                    <select name="flight_id" required>
+                                        <option value="" disabled selected>Select a flight</option>
+                                        {% for flight in flights %}
+                                            <option value="{{ flight.id }}">{{ flight.flight_number }} - {{ flight.airline }} ({{ flight.from_location }} to {{ flight.to_location }})</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn">Book Flight</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
