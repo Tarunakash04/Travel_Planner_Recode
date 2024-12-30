@@ -1,21 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Flight</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Available Flights for {{ plan.destination }}</h1>
-        <ul>
-            {% for flight in flights %}
-                <li>
-                    {{ flight.flight_number }} | {{ flight.airline }} | {{ flight.departure_time }} - {{ flight.arrival_time }}
-                </li>
-            {% else %}
-                <li>No flights available.</li>
-            {% endfor %}
-        </ul>
+        <h1>Book a Flight for {{ plan.destination }}</h1>
+        <form method="POST">
+            <!-- From Location Input -->
+            <label for="from_location">From Location:</label>
+            <input type="text" name="from_location" id="from_location" required placeholder="Enter departure location">
+            
+            <!-- To Location (readonly as it's based on the plan) -->
+            <label for="to_location">To Location:</label>
+            <input type="text" name="to_location" id="to_location" required value="{{ plan.destination }}" readonly>
+
+            <!-- Departure Date Input -->
+            <label for="departure_date">Departure Date:</label>
+            <input type="date" name="departure_date" id="departure_date" required>
+
+            <!-- Flight Selection Dropdown -->
+            <label for="flight_id">Choose a Flight:</label>
+            <select name="flight_id" id="flight_id" required>
+                <option value="" disabled selected>Select a flight</option>
+                {% for flight in flights %}
+                    <option value="{{ flight.id }}">{{ flight.flight_number }} - {{ flight.airline }} ({{ flight.from_location }} to {{ flight.to_location }})</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Book Flight</button>
+        </form>
         <a href="{{ url_for('view_plans') }}" class="btn">Back</a>
     </div>
 </body>
