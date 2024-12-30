@@ -1,10 +1,23 @@
-/* General Styles */
+:root {
+    --primary-color: #0563bb;
+    --secondary-color: #ffbb2c;
+    --text-color: #333;
+    --background-color: #f4f4f4;
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Raleway', sans-serif;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: var(--font-primary);
+    color: var(--text-color);
+    background: var(--background-color);
     margin: 0;
     padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-secondary);
+    margin: 0;
 }
 
 .container {
@@ -13,16 +26,10 @@ body {
     padding: 20px;
 }
 
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: var(--primary-color);
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -31,29 +38,9 @@ h1 {
 }
 
 .btn:hover {
-    background-color: #45a049;
+    background-color: var(--secondary-color);
 }
 
-/* Home Page Styles */
-.links {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.links a {
-    padding: 10px 20px;
-    margin: 0 10px;
-    background-color: #4CAF50;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.links a:hover {
-    background-color: #45a049;
-}
-
-/* Plan Travel Form */
 form {
     display: flex;
     flex-direction: column;
@@ -62,37 +49,32 @@ form {
     margin: 0 auto;
 }
 
-label {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-input[type="text"],
-input[type="date"],
-select {
-    padding: 8px;
-    font-size: 16px;
+input, select, button {
+    padding: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    font-size: 16px;
     width: 100%;
 }
 
-input[type="text"]:focus,
-input[type="date"]:focus,
-select:focus {
-    border-color: #4CAF50;
-    outline: none;
+button {
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-/* Table Styles for View Plans */
+button:hover {
+    background-color: var(--secondary-color);
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-table th,
-table td {
+table th, table td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
@@ -101,38 +83,4 @@ table td {
 table th {
     background-color: #f2f2f2;
     font-weight: bold;
-}
-
-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Flight Select Styles */
-select {
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-select:focus {
-    border-color: #4CAF50;
-    outline: none;
-}
-
-/* Button for Flight Booking */
-form button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-form button:hover {
-    background-color: #45a049;
 }
