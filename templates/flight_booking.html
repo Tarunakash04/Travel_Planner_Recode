@@ -1,27 +1,23 @@
-
-<!-- templates/flight_booking.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Flight</title>
+    <title>Available Flights</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Select a Flight for {{ destination }}</h1>
-        <form method="POST">
-            <label for="flight_id">Choose a Flight:</label>
-            <select name="flight_id" required>
-                <option value="" disabled selected>Select a flight</option>
-                {% for flight in flights %}
-                    <option value="{{ flight.id }}">{{ flight.flight_number }} - {{ flight.airline }} ({{ flight.from_location }} to {{ flight.to_location }})</option>
-                {% endfor %}
-            </select>
-            <button type="submit">Book Flight</button>
-        </form>
-        <a href="{{ url_for('view_plans') }}">Back to Plans</a>
+        <a href="{{ url_for('home') }}" class="btn">Home</a>
+        <h1>Available Flights</h1>
+        <ul>
+            {% for flight in flights %}
+                <li>{{ flight.flight_number }} | {{ flight.airline }} | {{ flight.departure_time }} - {{ flight.arrival_time }}</li>
+            {% else %}
+                <li>No flights available.</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('view_plans') }}" class="btn">Back</a>
     </div>
 </body>
 </html>
