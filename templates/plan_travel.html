@@ -1,25 +1,32 @@
-<!-- templates/plan_travel.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan Travel</title>
+    <title>Plan a Trip</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
+        <a href="{{ url_for('home') }}" class="btn">Home</a>
         <h1>Plan Your Trip</h1>
         <form action="{{ url_for('plan_travel') }}" method="POST">
-            <label for="destination">Destination:</label>
-            <input type="text" id="destination" name="destination" required><br>
-
+            <!-- From Location Input -->
+            <label for="from_location">From Location:</label>
+            <input type="text" id="from_location" name="from_location" required placeholder="Enter departure location">
+            
+            <!-- To Location Input -->
+            <label for="destination">To Location:</label>
+            <input type="text" id="destination" name="destination" required placeholder="Enter destination location">
+            
+            <!-- Departure Date Input -->
             <label for="departure_date">Departure Date:</label>
-            <input type="date" id="departure_date" name="departure_date" required><br>
-
+            <input type="date" id="departure_date" name="departure_date" required>
+            
+            <!-- Return Date Input -->
             <label for="return_date">Return Date:</label>
-            <input type="date" id="return_date" name="return_date" required><br>
-
+            <input type="date" id="return_date" name="return_date" required>
+            
             <button type="submit">Submit Travel Plan</button>
         </form>
     </div>
