@@ -1,4 +1,6 @@
 import mysql.connector
+from random import choice
+from datetime import datetime, timedelta
 
 def connect_db():
     return mysql.connector.connect(
@@ -39,44 +41,38 @@ def get_flights_by_route(destination):
     return flights
 
 def add_dummy_flights():
+    airlines = [
+        "American Airlines", "British Airways", "Delta Airlines", "United Airlines",
+        "Air France", "Lufthansa", "Emirates", "Singapore Airlines", "Qantas", "ANA"
+    ]
+    locations = [
+        ("New York", "London"), ("London", "Paris"), ("Los Angeles", "Tokyo"), 
+        ("San Francisco", "Sydney"), ("Paris", "New York"), ("Frankfurt", "Dubai"),
+        ("Dubai", "Singapore"), ("Singapore", "Tokyo"), ("Sydney", "Melbourne"),
+        ("Tokyo", "Osaka"), ("Paris", "Madrid"), ("London", "Dubai"),
+        ("Los Angeles", "London"), ("San Francisco", "New York"), ("Paris", "Rome"),
+        ("Frankfurt", "London"), ("Dubai", "Tokyo"), ("Singapore", "Los Angeles"),
+        ("Sydney", "New York"), ("Tokyo", "Hong Kong"), ("Paris", "Los Angeles")
+    ]
+    
+    flights_data = []
+    base_date = datetime(2024, 12, 28)
+
+    for i in range(150):
+        airline = choice(airlines)
+        from_location, to_location = choice(locations)
+        departure_time = base_date + timedelta(hours=i % 24, minutes=(i % 60) * 30)
+        arrival_time = departure_time + timedelta(hours=8, minutes=30)  # Assuming an average flight duration
+        flight_number = f"{choice(['AA', 'BA', 'DL', 'UA', 'AF', 'LH', 'EK', 'SQ', 'QF', 'NH'])}{100 + i}"
+        
+        flights_data.append((flight_number, airline, from_location, to_location, departure_time.strftime('%Y-%m-%d %H:%M:%S'), arrival_time.strftime('%Y-%m-%d %H:%M:%S')))
+
     conn = connect_db()
     cursor = conn.cursor()
     cursor.executemany("""
         INSERT INTO flights (flight_number, airline, from_location, to_location, departure_time, arrival_time)
         VALUES (%s, %s, %s, %s, %s, %s)
-    """, [
-        ("AA101", "American Airlines", "New York", "London", "2024-12-28 10:00:00", "2024-12-28 18:00:00"),
-        ("BA202", "British Airways", "London", "Paris", "2024-12-28 14:00:00", "2024-12-28 15:30:00"),
-        ("DL303", "Delta Airlines", "Los Angeles", "Tokyo", "2024-12-29 09:00:00", "2024-12-29 20:00:00"),
-        ("UA404", "United Airlines", "San Francisco", "Sydney", "2024-12-30 11:00:00", "2024-12-31 07:00:00"),
-        ("AF505", "Air France", "Paris", "New York", "2024-12-28 16:00:00", "2024-12-28 22:00:00"),
-        ("LH606", "Lufthansa", "Frankfurt", "Dubai", "2024-12-29 12:00:00", "2024-12-29 20:00:00"),
-        ("EK707", "Emirates", "Dubai", "Singapore", "2024-12-28 23:00:00", "2024-12-29 07:00:00"),
-        ("SQ808", "Singapore Airlines", "Singapore", "Tokyo", "2024-12-28 19:00:00", "2024-12-28 23:00:00"),
-        ("QF909", "Qantas", "Sydney", "Melbourne", "2024-12-29 08:00:00", "2024-12-29 09:30:00"),
-        ("NH010", "ANA", "Tokyo", "Osaka", "2024-12-28 17:00:00", "2024-12-28 18:30:00"),
-        ("AF111", "Air France", "Paris", "Madrid", "2024-12-29 10:00:00", "2024-12-29 11:30:00"),
-        ("BA222", "British Airways", "London", "Dubai", "2024-12-30 12:00:00", "2024-12-30 20:00:00"),
-        ("DL333", "Delta Airlines", "Los Angeles", "London", "2024-12-31 15:00:00", "2024-12-31 23:00:00"),
-        ("UA444", "United Airlines", "San Francisco", "New York", "2024-12-30 18:00:00", "2024-12-30 22:00:00"),
-        ("AF555", "Air France", "Paris", "Rome", "2024-12-28 13:00:00", "2024-12-28 14:30:00"),
-        ("LH666", "Lufthansa", "Frankfurt", "London", "2024-12-29 14:00:00", "2024-12-29 16:00:00"),
-        ("EK777", "Emirates", "Dubai", "Tokyo", "2024-12-29 21:00:00", "2024-12-30 06:00:00"),
-        ("SQ888", "Singapore Airlines", "Singapore", "Los Angeles", "2024-12-30 16:00:00", "2024-12-30 22:00:00"),
-        ("QF999", "Qantas", "Sydney", "New York", "2024-12-29 09:00:00", "2024-12-29 14:00:00"),
-        ("NH111", "ANA", "Tokyo", "Hong Kong", "2024-12-28 10:00:00", "2024-12-28 12:30:00"),
-        ("AF123", "Air France", "Paris", "Los Angeles", "2024-12-30 08:00:00", "2024-12-30 18:00:00"),
-        ("BA234", "British Airways", "London", "Singapore", "2024-12-28 07:00:00", "2024-12-28 15:00:00"),
-        ("DL345", "Delta Airlines", "Los Angeles", "Paris", "2024-12-31 09:00:00", "2024-12-31 17:00:00"),
-        ("UA456", "United Airlines", "San Francisco", "Tokyo", "2024-12-28 21:00:00", "2024-12-29 05:00:00"),
-        ("AF567", "Air France", "Paris", "Melbourne", "2024-12-29 12:00:00", "2024-12-29 19:30:00"),
-        ("LH678", "Lufthansa", "Frankfurt", "Singapore", "2024-12-28 16:00:00", "2024-12-28 22:30:00"),
-        ("EK789", "Emirates", "Dubai", "Sydney", "2024-12-29 18:00:00", "2024-12-30 07:00:00"),
-        ("SQ890", "Singapore Airlines", "Singapore", "New York", "2024-12-28 22:00:00", "2024-12-29 06:00:00"),
-        ("QF101", "Qantas", "Sydney", "Dubai", "2024-12-28 11:00:00", "2024-12-28 19:00:00"),
-        ("NH212", "ANA", "Tokyo", "Los Angeles", "2024-12-29 20:00:00", "2024-12-30 04:30:00"),
-        ("AF323", "Air France", "Paris", "Dubai", "2024-12-29 10:00:00", "2024-12-29 18:00:00")
-    ])
+    """, flights_data)
     conn.commit()
     cursor.close()
     conn.close()
